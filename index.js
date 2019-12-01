@@ -11,10 +11,15 @@ const chalk = require('chalk');
 var app = express();
 
 var apiRoutes = require('./routes/api');
-//var htmRoutes = require('./routes/pug');
+var htmRoutes = require('./routes/pug');
 
-apiRoutes.addRoutes(app, { dbUri: MONGO_URI, dbName: DB_NAME });
-//htmRoutes.addRoutes(app);
+var config = {
+    dbUri: MONGO_URI,
+    dbName: DB_NAME
+}
+
+apiRoutes.addRoutes(app, config);
+htmRoutes.addRoutes(app, config);
 
 app.listen(PORT, () => {
     console.log(chalk.green.bold('Listening'), `to port ${PORT}`);

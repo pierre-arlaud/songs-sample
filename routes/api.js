@@ -11,9 +11,8 @@ function addApiRoutes(app, config, callback) {
 		res.json({ data: results });
 	    });
 	});
-
-
-	callback();
+	
+	if (callback) callback();
     });
 }
 

@@ -1,0 +1,28 @@
+{
+  "name": "songs-sample",
+  "version": "1.0.0",
+  "description": "A sample project for Node.JS with Express and MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "songs",
+    "node",
+    "mongodb",
+    "express",
+    "pug",
+    "mocha",
+    "chai"
+  ],
+  "author": "Pierre ARLAUD",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "chalk": "^3.0.0",
+    "express": "^4.17.1",
+    "mocha": "^6.2.2",
+    "mongodb": "^3.3.5",
+    "pug": "^2.0.4"
+  }
+}

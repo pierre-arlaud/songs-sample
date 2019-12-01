@@ -56,8 +56,10 @@ function removeSong(db) {
 
 function removeAllSongs(db) {
     return callback => {
-
-	callback();
+	db.collection(COLLECTION_NAME).deleteMany({}, (err, count) => {
+	    if (err) printFailure(err);
+	    callback(count);
+	});
     }
 }
 

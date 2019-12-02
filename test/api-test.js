@@ -27,8 +27,9 @@ describe('api', () => {
 	request(`http://localhost:${PORT}/api/songs`, { json: true }, (err, res, body) => {
 	    expect(err).to.not.exist;
 	    expect(body).to.have.property('data');
-	    expect(bod.ydata).to.be.an('array');
+	    expect(body.data).to.be.an('array');
 	    done();
 	});
     });
 });
+

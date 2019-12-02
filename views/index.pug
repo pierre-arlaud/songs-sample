@@ -3,3 +3,23 @@ html
     title My favourite songs page!
   body
     h1 My favourite songs
+
+    form(action='new', method='post')
+      table#songs
+        thead
+          tr
+            th Artist
+            th Song Title
+            th
+        tbody
+          each song in songlist
+            tr
+              td= song.artist
+              td= song.name
+              td
+        tfoot
+          tr
+            td: input(type='text' name='artist')
+            td: input(type='text' name='name')
+            td: input(type='submit')
+

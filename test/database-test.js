@@ -52,6 +52,17 @@ describe('database', () => {
 	});
     });
 
+    it('should not crash when adding empty objects', done => {
+        songs.add(null, id => {
+            // Waiting for a second to ensure a new date
+            setTimeout(() => {
+                songs.add(undefined, id => {
+                    done();
+                });
+            }, 1000);
+        });
+    });
+
 
     it('should clear the entire list', done => {
 	songs.removeAll(() => {

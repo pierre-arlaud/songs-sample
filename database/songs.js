@@ -30,6 +30,7 @@ function countSongs(db) {
 
 function addSong(db) {
     return (entry, callback) => {
+	if (!entry) entry = {};
 	var song = {
 	    name: entry.name || '',
 	    artist: entry.artist || ''
@@ -40,7 +41,10 @@ function addSong(db) {
 	song._id = crypto.createHash('md5').update(salt).digest('hex');
 	
 	db.collection(COLLECTION_NAME).insertOne(song, (err, response) => {
-	    if (err) printFailure(err);
+	    if (err) {
+                printFailure(err);
+                return callback(null);
+            }
 	    var result = response.ops[0];
 	    callback(result._id);
 	});

@@ -15,21 +15,21 @@ const config = {
 describe('api', () => {
 
     before(done => {
-	const express = require('express');
-	const app = express();
-
-	require('../routes/api').addRoutes(app, config, () => {
-	    app.listen(PORT, done);
-	});
+        const express = require('express');
+        const app = express();
+        
+        require('../routes/api').addRoutes(app, config, () => {
+            app.listen(PORT, done);
+        });
     });
     
     it('should return documents', done => {
-	request(`http://localhost:${PORT}/api/songs`, { json: true }, (err, res, body) => {
-	    expect(err).to.not.exist;
-	    expect(body).to.have.property('data');
-	    expect(body.data).to.be.an('array');
-	    done();
-	});
+        request(`http://localhost:${PORT}/api/songs`, { json: true }, (err, res, body) => {
+            expect(err).to.not.exist;
+            expect(body).to.have.property('data');
+            expect(body.data).to.be.an('array');
+            done();
+        });
     });
 });
 

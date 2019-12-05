@@ -12,58 +12,58 @@ function printFailure(err) {
 
 function findSongs(db) {
     return callback => {
-	db.collection(COLLECTION_NAME).find({}).toArray((err, results) => {
-	    if (err) printFailure(err);
-	    callback(err ? [] : results);
-	});
+        db.collection(COLLECTION_NAME).find({}).toArray((err, results) => {
+            if (err) printFailure(err);
+            callback(err ? [] : results);
+        });
     }
 }
 
 function countSongs(db) {
     return callback => {
-	db.collection(COLLECTION_NAME).find({}).count((err, count) => {
-	    if (err) printFailure(err);
-	    callback(err ? -1: count);
-	});
+        db.collection(COLLECTION_NAME).find({}).count((err, count) => {
+            if (err) printFailure(err);
+            callback(err ? -1: count);
+        });
     };
 }
 
 function addSong(db) {
     return (entry, callback) => {
-	if (!entry) entry = {};
-	var song = {
-	    name: entry.name || '',
-	    artist: entry.artist || ''
-	};
+        if (!entry) entry = {};
+        var song = {
+            name: entry.name || '',
+            artist: entry.artist || ''
+        };
 
-	// Generating a unique string id (because ObjectIDs are overrated, amirite?)
-	var salt = [String(new Date()), song.name, song.artist].join('|');
-	song._id = crypto.createHash('md5').update(salt).digest('hex');
-	
-	db.collection(COLLECTION_NAME).insertOne(song, (err, response) => {
-	    if (err) {
+        // Generating a unique string id (because ObjectIDs are overrated, amirite?)
+        var salt = [String(new Date()), song.name, song.artist].join('|');
+        song._id = crypto.createHash('md5').update(salt).digest('hex');
+        
+        db.collection(COLLECTION_NAME).insertOne(song, (err, response) => {
+            if (err) {
                 printFailure(err);
                 return callback(null);
             }
-	    var result = response.ops[0];
-	    callback(result._id);
-	});
+            var result = response.ops[0];
+            callback(result._id);
+        });
     };
 }
 
 // Unused
 function removeSong(db) {
     return (id, callback) => {
-	callback();
+        callback();
     };
 }
 
 function removeAllSongs(db) {
     return callback => {
-	db.collection(COLLECTION_NAME).deleteMany({}, (err, count) => {
-	    if (err) printFailure(err);
-	    callback(count);
-	});
+        db.collection(COLLECTION_NAME).deleteMany({}, (err, count) => {
+            if (err) printFailure(err);
+            callback(count);
+        });
     }
 }
 
@@ -73,22 +73,22 @@ module.exports = (config, callback) => {
     const client = new MongoClient(config.dbUri, { useUnifiedTopology: true});
  
     client.connect(err => {
-	// Handling mongo connect error and logging
-	if (err) {
-	    console.error(chalk.red.bold('Error'), 'could not open Mongodb:', chalk.grey(err));
-	    process.exit(1);
-	}
-	if (!config.silent) console.log(chalk.green.bold('Connected'), 'to mongo');
-	
-	const db = client.db(config.dbName);
-	
-	callback({
-	    find: findSongs(db),
-	    count: countSongs(db),
-	    add: addSong(db),
-	    remove: removeSong(db),
-	    removeAll: removeAllSongs(db)
-	});
+        // Handling mongo connect error and logging
+        if (err) {
+            console.error(chalk.red.bold('Error'), 'could not open Mongodb:', chalk.grey(err));
+            process.exit(1);
+        }
+        if (!config.silent) console.log(chalk.green.bold('Connected'), 'to mongo');
+        
+        const db = client.db(config.dbName);
+ 
+        callback({
+            find: findSongs(db),
+            count: countSongs(db),
+            add: addSong(db),
+            remove: removeSong(db),
+            removeAll: removeAllSongs(db)
+        });
     });
 
 };

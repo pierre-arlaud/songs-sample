@@ -15,7 +15,7 @@ function addHtmlRoutes(app, config, callback) {
             `${config.apiRoot}/api/song`,
             { json: req.body }, // the song object is send here
             (err, reqRes, body) => {
-	        if (err) console.error(chalk.bold.red('Error'), err);
+                if (err) console.error(chalk.bold.red('Error'), err);
                 res.render('new', {
                     success: req.body && req.body.success
                 });
@@ -26,9 +26,9 @@ function addHtmlRoutes(app, config, callback) {
 
     app.get('/', (req, res) => {
         console.log(chalk.blue.bold('Receive'), chalk.grey('call to'), chalk.yellow('/'));
-	
+        
         // GET /api/songs
-	request.get(`${config.apiRoot}/api/songs`, { json: true }, (err, reqRes, body) => {
+        request.get(`${config.apiRoot}/api/songs`, { json: true }, (err, reqRes, body) => {
             res.render('index', {
                 songlist: !err && body && Array.isArray(body.data) ? body.data : []
             });

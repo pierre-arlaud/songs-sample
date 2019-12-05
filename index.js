@@ -22,7 +22,10 @@ var config = {
     apiRoot: `http://localhost:${PORT}`
 }
 
+// Static views
+app.use(express.static('assets'));
 
+// Routes for the api
 apiRoutes.addRoutes(app, config);
 htmRoutes.addRoutes(app, config);
 
